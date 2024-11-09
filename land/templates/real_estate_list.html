@@ -1,0 +1,46 @@
+{%extends 'base.html'%}
+
+{%block main_block%}
+<div class="container">
+  <div>
+    <form class="d-flex" role="search" action="{%url 'realestate-list'%}">
+      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="filter" list="records">
+      <datalist id="records">
+        {%for r in records%}
+        <option value="{{r}}"></option>
+        {%endfor%}
+      </datalist>
+      <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+    {{records}}
+  </div>
+  <div class="row mt-5">
+      {%for r in data%}
+          <div class="col-3">
+              <div class="card" style="width: 18rem;">
+                {%if v.picture%}
+                <img src="{{r.picture.url}}" class="card-img-top" alt="...">
+                 {%endif%}
+                  <div class="card-body">
+                    <h5 class="card-title">{{r.name}}{{r.id}} </h5>
+                    <p class="card-text">
+                      {{r.contact_details}}
+                    </p>
+                  </div>
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Price:{{r.price}}</li>
+                    <li class="list-group-item">Address:{{r.address}}</li>
+                    <li class="list-group-item">Location:{{r.location}}</li>
+                  </ul>
+                  <div class="card-body">
+                    <a href="{%url 'realestate-details' r.id%}" class="card-link">View</a>
+                    <a href="{%url 'realestate-delete' r.id%}" class="card-link">Delete</a>
+                    <a href="{%url 'realestate-update' r.id%}" class="card-link">Update</a>
+                  </div>
+                </div>
+          </div>
+      {%endfor%}
+  </div>
+</div>
+
+{%endblock%}
